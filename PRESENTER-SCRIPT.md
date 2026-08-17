@@ -20,9 +20,9 @@
 | 0:55 | Stretch (optional) | Azure Table Storage + Azure OpenAI | Architecture diagram | Code walkthrough, no live Azure needed |
 | 0:58 | Closing | 5 Golden Rules + call to action | None | None |
 
-> **Timing note:** the core loop (Segments 1 to 7, including the Fleet/Squad concept segment) fits inside 55 minutes. The *talking points* in the Fleet/Squad segment are not optional, they're core content, even if you skip the live demo inside it.
+> **Timing note:** the core loop (Segments 1 to 7, including the Fleet/Squad concept segment) fits inside 55 minutes. The *talking points* in the Fleet/Squad segment are not optional, they're core content, only the optional live `/fleet` demo can be cut for time.
 
-> **Livestream note:** there is no in-room audience. Everyone watching is in YouTube chat. Have a moderator (or a second monitor) watching chat throughout so questions can be answered live without breaking flow.
+> **Livestream note:** there is no in-room audience. Everyone watching is in YouTube chat. Have a moderator (or a second monitor) watching chat throughout so questions can be answered live without breaking your flow on screen.
 
 ---
 
@@ -35,15 +35,15 @@
 >
 > Today we're going to do something a little different. I'm not going to teach you GitHub Copilot features. I'm going to change how you think about writing code.
 >
-> When I say "AI-native", I don't mean bolting an AI assistant onto the pipeline you already have, and I don't mean using Copilot to autocomplete a line of code faster. AI-native is a different shape of software development lifecycle entirely. It's built around coding agents and agentic workflows from the ground up: you write an issue as a specification, an agent explores the codebase, plans the work, writes the code, runs the tests, and opens a pull request, all without a human driving every keystroke.
+> When I say "AI-native", I don't mean bolting an AI assistant onto the pipeline you already have, and I don't mean using Copilot to autocomplete a line of code faster. AI-native is a different shape of workflow entirely.
 >
-> That changes what your job actually is. You're no longer the one typing every line. You're the one defining **what** to build, **why** it matters, and what "done" looks like. The agent handles **how**. Your value moves upstream to writing precise specifications, and downstream to smart, critical review. That's not a faster version of the old workflow, it's a genuinely new way of working, and it's why we spend real time today on writing issues and reviewing PRs, not on typing code.
+> That changes what your job actually is. You're no longer the one typing every line. You're the one defining **what** to build, **why** it matters, and what "done" looks like. The agent handles **how**.
 >
-> By the end of this hour, you will have watched the full AI-native loop happen live: write issue, delegate to Copilot, review the PR, iterate. If you've got the repo forked, follow along in your own environment, or just watch, either works.
+> By the end of this hour, you will have watched the full AI-native loop happen live: write issue, delegate to Copilot, review the PR, iterate. If you've got the repo forked, follow along in your own copy.
 
-> 🔎 **Fun fact to drop here:** GitHub Copilot's coding agent runs your assigned issue inside an isolated GitHub Actions VM. It genuinely cannot touch production, cannot push directly to protected branches, and cannot merge its own PR. That isolation is what makes agentic workflows safe to hand real work to, not just a novelty demo.
+> 🔎 **Fun fact to drop here:** GitHub Copilot's coding agent runs your assigned issue inside an isolated GitHub Actions VM. It genuinely cannot touch production, cannot push directly to protected branches, and every action it takes is logged in a session you can audit afterwards.
 
-> 💡 **Chat prompt:** ask the chat "How many of you have used GitHub Copilot for code completion? Type C in chat." Then: "How many have used Copilot to write an entire feature from a GitHub Issue? Type F in chat." Use the split to set up why today's session is about the F group, not the C group.
+> 💡 **Chat prompt:** ask the chat "How many of you have used GitHub Copilot for code completion? Type C in chat." Then: "How many have used Copilot to write an entire feature from a GitHub Issue? Type F in chat."
 
 ---
 
@@ -89,7 +89,7 @@ python app.py list --overdue
 **SAY:**
 > Before Copilot writes a single line of code, it reads two things: your issue, and the copilot-instructions file.
 >
-> Think of `copilot-instructions.md` as the onboarding document you'd give a new developer. It tells Copilot what libraries to use, how to handle secrets, what the test approach is, and what "done" looks like for this project.
+> Think of `copilot-instructions.md` as the onboarding document you'd give a new developer. It tells Copilot what libraries to use, how to handle secrets, what the test approach is, and what "done" looks like for this repo.
 
 **DO:**
 1. Share your screen on `.github/copilot-instructions.md`
@@ -117,7 +117,7 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 **SAY:**
 > When Copilot adds the Azure backend, it has to keep every one of these tests passing. That's the safety net. And it will write new tests for the new code too.
 
-> 🔎 **Interesting fact:** keeping the dependency list minimal (`click`, `rich`, `pytest`) isn't just good practice for humans, it directly improves what an AI coding agent can do with your repo. Fewer moving parts means less ambiguity for the agent to resolve.
+> 🔎 **Interesting fact:** keeping the dependency list minimal (`click`, `rich`, `pytest`) isn't just good practice for humans, it directly improves what an AI coding agent can do with your repo. Fewer dependencies means less ambiguity for the agent to reason about when deciding how to extend the code.
 
 ---
 
@@ -164,11 +164,11 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 >
 > A human developer might fill in those gaps from experience. Copilot takes you literally. The more you specify, the closer the output is to what you actually want.
 >
-> Take 5 minutes if you're following along in your own fork, write the same issue or try Option B, C, or D from the exercises folder. I'll keep talking through the reasoning while you write, and I'll answer questions in chat.
+> Take 5 minutes if you're following along in your own fork, write the same issue or try Option B, C, or D from the exercises folder. I'll keep talking through the reasoning while you write, and I'll check chat for questions.
 
 > 🔎 **Interesting fact:** this is essentially prompt engineering wearing a GitHub Issues costume. The same principles, specificity, examples, constraints, that make a good LLM prompt make a good AI-native issue.
 
-> 👀 **WATCH FOR:** keep an eye on chat while people share their draft issues or ask questions. If someone posts an issue that's vague in the Acceptance Criteria section, gently prompt in chat: "What specifically should happen here?"
+> 👀 **WATCH FOR:** keep an eye on chat while people share their draft issues or ask questions. If someone posts an issue that's vague in the Acceptance Criteria section, gently prompt in chat: "What would 'done' look like for that requirement specifically?"
 
 ---
 
@@ -179,11 +179,11 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 **SAY:**
 > Now for the part that still feels a bit like magic the first time you see it.
 >
-> Open the issue you just submitted. On the right side, find the Assignees panel. Click the gear icon. Search for "Copilot" and assign it. If you're following along, do the same on your own issue now.
+> Open the issue you just submitted. On the right side, find the Assignees panel. Depending on your repo's UI, you'll see either a dropdown listing available assignees, or a dedicated **Assign to Agent** button. Either way, we're assigning this issue to GitHub Copilot's coding agent. If you're following along, do the same on your own issue now.
 
 **DO:**
 1. Demonstrate on your own issue, on screen
-2. Click the Assignees gear, select Copilot
+2. In the Assignees panel, either select **Copilot** from the assignee dropdown, or click **Assign to Agent** if that's what your repo shows, both do the same thing
 3. Show the confirmation comment that appears on the issue
 4. Open the GitHub Copilot App on your desktop, go to My Work, find the active session
 5. Keep this on the main screen share so everyone watching can see Copilot working in real time
@@ -192,6 +192,10 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 > While we wait, watch what it does first. It doesn't start coding immediately. It **explores**. It reads `copilot-instructions.md`. It reads `app.py`. It reads the existing tests.
 >
 > That's exactly what a good developer does, understand the codebase before touching it.
+>
+> One thing worth calling out here: this agent runs entirely in the cloud, on a GitHub Actions virtual machine. It is not running on my laptop. That means it keeps working even if I close this laptop and walk away.
+>
+> Today we're specifically using GitHub Copilot. Some of you may notice that same Assignees panel can list other AI agents as options too. That's not GitHub being agnostic about which agent does the work, it's the opposite. It's GitHub offering **choice**, while every one of those agents, Copilot included, runs inside the same governed control plane: the same repository permissions, the same branch protections, the same audit logging, the same security and compliance boundary. That control plane is GitHub's real advantage. You get to choose your agent, but you never leave GitHub's security, governance, privacy, and compliance model to do it.
 
 > 👀 **WATCH FOR:**
 > - Point out on screen when Copilot references `copilot-instructions.md`, this is the payoff for Segment 3
@@ -207,22 +211,22 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 
 *Screen: Concept slide or architecture diagram, terminal optional*
 
-> **This segment is core content, not optional.** While Copilot works in the background on the issue we just assigned, this is the natural moment to zoom out and talk about what happens once you outgrow a single issue.
+> **This segment is core content, not optional.** While Copilot works in the background on the issue we just assigned, this is the natural moment to zoom out and talk about what happens once you outgrow a single issue at a time.
 
 **SAY:**
-> So far we've done the smallest possible unit of AI-native work: one issue, one agent, one PR. That's the right place to start, but it doesn't scale to a real sprint, where you might have ten issues to work through at once.
+> So far we've done the smallest possible unit of AI-native work: one issue, one agent, one PR. That's the right place to start, but it doesn't scale to a real sprint, where you might have ten issues in flight.
 >
 > This is where `/fleet` and `/squad` come in. They're two different answers to the same question: "How do I go from one developer directing one agent, to a whole team directing many agents at once?"
 
 **SAY, explain `/fleet`:**
-> `/fleet` is a Copilot CLI command built for **parallel, stateless execution**. You give it one objective, and an orchestrator agent breaks that objective into independent sub-tasks, checks which ones are unblocked, and dispatches them all at once.
+> `/fleet` is a Copilot CLI command built for **parallel, stateless execution**. You give it one objective, and an orchestrator agent breaks that objective into independent sub-tasks, checks which ones are unblocked, and runs them in parallel.
 >
-> Think of it like this: if our single Copilot agent today is one developer picking up one issue, `/fleet` is like assigning ten related issues at once and having ten short-lived contractors work them in parallel, then handing you back ten reviewable results.
+> Think of it like this: if our single Copilot agent today is one developer picking up one issue, `/fleet` is like assigning ten related issues at once and having ten short-lived contractors work them simultaneously, then handing back the combined result.
 
 **SAY, explain `/squad`:**
-> `/squad` is a different shape of answer. It's not a single CLI command, it's an open source framework you install into your repo that creates a **persistent team of named agents**. Unlike Fleet's disposable sub-agents, Squad agents stick around across sessions.
+> `/squad` is a different shape of answer. It's not a single CLI command, it's an open source framework you install into your repo that creates a **persistent team of named agents**. Unlike Fleet's disposable sub-agents, Squad agents stick around across issues and sessions.
 >
-> If Fleet is contractors for a single sprint, Squad is closer to hiring permanent specialists onto your team, they build context over time, and they can even use Fleet internally when they need a burst of parallel capacity.
+> If Fleet is contractors for a single sprint, Squad is closer to hiring permanent specialists onto your team, they build context over time, and they can even use Fleet internally when they need a burst of parallel throughput.
 
 **SAY, connect it to cloud-native AI in the SDLC:**
 > Here's why this matters beyond the novelty. These two patterns map almost exactly onto ideas you already use in cloud-native architecture.
@@ -233,9 +237,9 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 >
 > And the wave-based dependency scheduling inside `/fleet`, run what's unblocked, wait, run the next wave, is conceptually the same DAG scheduling you already know from CI/CD pipelines or a Kubernetes job graph.
 >
-> The takeaway: the single-issue loop we're doing today is the "hello world". `/fleet` and `/squad` are how that same loop scales to a real team's backlog without you personally babysitting every single agent.
+> The takeaway: the single-issue loop we're doing today is the "hello world". `/fleet` and `/squad` are how that same loop scales to a real team's backlog without you personally babysitting every single agent session.
 
-> 🔎 **Interesting fact:** neither `/fleet` nor `/squad` change the core safety model. Every sub-agent, whether disposable (Fleet) or persistent (Squad), still opens a PR, still cannot merge its own work, and still runs inside isolated infrastructure. More agents does not mean less review.
+> 🔎 **Interesting fact:** neither `/fleet` nor `/squad` change the core safety model. Every sub-agent, whether disposable (Fleet) or persistent (Squad), still opens a PR, still cannot merge its own work, and still runs in an isolated sandbox with no production access, all governed by that same GitHub control plane.
 
 **DO (optional live demo, time permitting only):**
 ```bash
@@ -244,9 +248,9 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
        (Azure OpenAI client setup, tag suggestion function, tests) and
        work them in parallel
 ```
-> If you don't have time to run this live, simply describe it from the slide: point out that the orchestrator will split the objective, dispatch the independent pieces at once, and reassemble the results.
+> If you don't have time to run this live, simply describe it from the slide: point out that the orchestrator will split the objective, dispatch the independent pieces at once, and reassemble the result as a single reviewable PR.
 
-> 👀 **WATCH FOR:** chat will likely ask "does this mean I lose control?" Reinforce: no, every sub-agent's output still lands as a reviewable PR. More agents means more parallel proposals, not less oversight.
+> 👀 **WATCH FOR:** chat will likely ask "does this mean I lose control?" Reinforce: no, every sub-agent's output still lands as a reviewable PR. More agents means more parallel proposals, not less review.
 
 > 💡 **Chat prompt:** ask chat "In your team, is your bottleneck today writing enough good issues, or reviewing enough PRs? `/fleet` and `/squad` only help if you already know how to do Exercise 01 and Exercise 03 well."
 
@@ -259,9 +263,9 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 **SAY:**
 > Copilot has opened a draft PR. This is where your most important skill in AI-native development comes into play: **critical review**.
 >
-> Copilot is very good at writing plausible code. Plausible is not the same as correct, secure, or exactly what you asked for. You are the quality gate. That's true whether it's one agent's PR, like this one, or ten PRs from a `/fleet` run.
+> Copilot is very good at writing plausible code. Plausible is not the same as correct, secure, or exactly what you asked for. You are the quality gate. That's true whether it's one agent's PR, like this one, or a fleet of ten.
 >
-> Before we look at any code, let's read the session log in the PR description together. Copilot explains every decision it made. This is like reading a PR summary from a junior developer, you understand the reasoning before you judge the output.
+> Before we look at any code, let's read the session log in the PR description together. Copilot explains every decision it made. This is like reading a PR summary from a junior developer, you understand their reasoning before you judge their output.
 
 **DO:**
 1. Open the draft PR on screen
@@ -277,7 +281,7 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 | New tests exist | Tests mock Azure calls, no real API calls |
 
 **SAY:**
-> If you're following along on your own PR, find at least one thing to comment on. Not because Copilot did it wrong, maybe it didn't, but because the skill of writing precise PR feedback is itself what makes this workflow work.
+> If you're following along on your own PR, find at least one thing to comment on. Not because Copilot did it wrong, maybe it didn't, but because the skill of writing precise PR feedback is itself what we're practicing.
 >
 > Good PR comments are **specific.** Not "this could be better." Instead: "The error message on line 42 says connection failed but doesn't tell the user what env var to set. Can you include the variable name in the message?"
 
@@ -285,7 +289,7 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 1. Demonstrate leaving a comment on a specific line in Files changed
 2. Give it about 5 minutes for anyone following along to review their own PR and leave a comment, meanwhile invite chat to paste an example comment they'd leave so you can read a few out
 
-> 🔎 **Interesting fact:** this checklist habit is what separates AI-native teams that ship reliable software from teams that ship plausible-looking bugs. Plausible is not the same as correct, and only a human reviewer can tell the difference.
+> 🔎 **Interesting fact:** this checklist habit is what separates AI-native teams that ship reliable software from teams that ship plausible-looking bugs. Plausible is not the same as correct, and only a human reviewer with domain context can tell the difference.
 
 > 👀 **WATCH FOR:** if chat posts a vague comment like "improve this", reply in chat asking "What specifically? What would the improved version look like?" Call out anyone who spots a real security or logic issue.
 
@@ -316,7 +320,7 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 > - *"Can you extract the Azure entity mapping into its own function? It's mixed in with the save logic."*
 
 **SAY:**
-> Notice: **Copilot cannot merge.** The human is always the final gate. AI-native does not mean AI-autonomous. It means AI-collaborative. That's a deliberate design decision, not a limitation, and as the workflow scales to `/fleet` and `/squad`, that same gate still applies to every single PR.
+> Notice: **Copilot cannot merge.** The human is always the final gate. AI-native does not mean AI-autonomous. It means AI-collaborative. That's a deliberate design decision, not a limitation, and it holds true no matter how many agents you're running.
 >
 > How many rounds did it take? One? Three? Drop your round count in chat, the answer depends almost entirely on how precisely you wrote the original issue.
 
@@ -329,7 +333,7 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 > **Use this segment only if Exercises 02 to 04 finished with time to spare. Otherwise, skip straight to Closing and point to Exercise 05 as homework.**
 
 **SAY:**
-> Let's look at what happens when the ask gets harder. There are two pre-written issues in the exercises folder: migrating storage to Azure Table Storage, which we just did, and adding Azure OpenAI powered tag suggestions.
+> Let's look at what happens when the ask gets harder. There are two pre-written issues in the exercises folder: migrating storage to Azure Table Storage, which we just did, and adding Azure OpenAI powered smart tag suggestions.
 
 **DO, show the architecture pattern:**
 
@@ -343,9 +347,9 @@ CLI (app.py)
 **SAY:**
 > The key design principle here is zero breaking changes. If `AZURE_STORAGE_CONNECTION_STRING` isn't set, it falls back to local JSON. Same for OpenAI, if the env vars aren't there, the app degrades gracefully.
 >
-> When you review this kind of PR, look extra hard for one thing: hardcoded credentials. That's the single most critical failure mode when delegating cloud integration work to an AI agent. Everything else is recoverable, a leaked secret is not.
+> When you review this kind of PR, look extra hard for one thing: hardcoded credentials. That's the single most critical failure mode when delegating cloud integration work to an AI agent. Everything else is a nice-to-have compared to that.
 
-> 🔎 **Fun fact:** asking Copilot to mock cloud calls in tests, using `unittest.mock`, rather than hitting real Azure resources, is both a testing best practice and a cost and safety control. Your CI never touches a real Azure account.
+> 🔎 **Fun fact:** asking Copilot to mock cloud calls in tests, using `unittest.mock`, rather than hitting real Azure resources, is both a testing best practice and a cost and safety control. Your CI pipeline never touches a real Azure bill or a real API key.
 
 ---
 
@@ -369,7 +373,7 @@ CLI (app.py)
 5. **Stay in the loop**, check the session log, understand what Copilot did and why.
 
 **SAY:**
-> For those of you who want to go further: Exercise 05 in the exercises folder has a ready-to-use issue for adding Azure OpenAI smart tag suggestions. Your homework: fork this repo, write the issue, assign it to Copilot, and review the PR yourself.
+> For those of you who want to go further: Exercise 05 in the exercises folder has a ready-to-use issue for adding Azure OpenAI smart tag suggestions. Your homework: fork this repo, write the issue, and run the loop yourself.
 >
 > You now have the skills to do that loop on any codebase, your work projects, your personal projects, anything, whether it's one issue or ten.
 >
@@ -387,6 +391,12 @@ CLI (app.py)
 - Use it. A real bug caught in review is the best possible demo of why human review matters
 - Say: *"This is the payoff. Copilot is fast, but not infallible. We caught this on review, that's our value in the loop."*
 
+**If the Assignees panel looks different than expected (gear icon vs. dropdown vs. "Assign to Agent" button):**
+- GitHub's assignment UI has changed over time and varies by repo settings. Don't worry about matching the script's exact wording, whatever variant appears, assign the issue to **Copilot**, that's the exercise.
+- If a dropdown appears with multiple AI agents listed (Copilot, Claude, Codex), select **Copilot**. This is our episode, so we're staying focused on GitHub Copilot throughout.
+- If a dedicated **Assign to Agent** button appears instead, click it, it performs the same assignment to Copilot.
+- If chat asks why other agents are listed at all: this is GitHub offering choice of agent, all governed under one control plane, the same security, governance, privacy, and compliance boundary applies no matter which agent a team picks. It's a platform strength, not a sign of indecision.
+
 **If chat asks about `copilot-instructions.md` being a security risk:**
 - The file lives in `.github/`, it's part of the repo, just like the README. No secrets go in here, ever.
 - Secrets live in environment variables or Azure Key Vault. That's why the instructions explicitly say so.
@@ -395,6 +405,15 @@ CLI (app.py)
 - The agent runs inside an isolated GitHub Actions VM per session, it has no persistent access beyond that run and cannot merge, push to protected branches, or touch production directly.
 - The session log gives you a full audit trail of every decision and file it touched.
 - This holds true for `/fleet` sub-agents and `/squad` agents too, more agents does not mean less isolation or less review.
+
+**If chat asks whether the coding agent needs your laptop to stay open:**
+- No. The agent runs entirely on GitHub's cloud infrastructure (a GitHub Actions VM), not locally. You can close your laptop and the session keeps running.
+- This is a genuine architectural difference from Copilot autocomplete or Copilot Chat in your editor, which only runs while your editor session is active.
+
+**If chat asks why other AI agents (Claude, Codex) appear as assignee options at all:**
+- GitHub's platform is built to let organizations choose which agent works best for them, without ever leaving GitHub's security, governance, privacy, and compliance model.
+- That's the differentiator: choice of agent, wrapped in one consistent, auditable control plane. It's not GitHub being neutral about which agent to use, it's GitHub owning the governance layer regardless of which agent an org selects.
+- For today's session, we're focused on GitHub Copilot, so keep that selection consistent throughout the exercises.
 
 **If viewers run out of time on Exercise 01:**
 - It's fine, the Azure issue template in Exercise 05 is pre-written. They can copy-paste it after the stream.
