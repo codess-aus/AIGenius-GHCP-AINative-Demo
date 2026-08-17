@@ -14,13 +14,14 @@
 | 0:10 | Context | `copilot-instructions.md` + test suite | `.github/copilot-instructions.md` | Terminal: `pytest` |
 | 0:15 | Exercise 01 | Write a well-formed issue together | Browser: Issues tab, template | None |
 | 0:25 | Exercise 02 | Assign to Copilot, watch it work | None | Browser + Copilot App |
-| 0:30 | Concept | Scaling up: from one issue to a fleet (`/fleet` and `/squad`) | Architecture / concept slide | Optional: live `/fleet` demo, time permitting |
+| 0:30 | Showcase | The GitHub Copilot app: what it is, when to use it, worktrees, canvases | Copilot App screenshare | Live: My Work view, a session, a canvas |
+| 0:34 | Concept | Scaling up: from one issue to a fleet (`/fleet` and `/squad`) | Architecture / concept slide | Optional: live `/fleet` demo, time permitting |
 | 0:38 | Exercise 03 | Review the generated PR | None | Browser: PR diff, session log |
 | 0:48 | Exercise 04 | Iterate via PR comments | None | Browser: PR comments, merge |
 | 0:55 | Stretch (optional) | Azure Table Storage + Azure OpenAI | Architecture diagram | Code walkthrough, no live Azure needed |
 | 0:58 | Closing | 5 Golden Rules + call to action | None | None |
 
-> **Timing note:** the core loop (Segments 1 to 7, including the Fleet/Squad concept segment) fits inside 55 minutes. The *talking points* in the Fleet/Squad segment are not optional, they're core content, only the optional live `/fleet` demo can be cut for time.
+> **Timing note:** the core loop (Segments 1 to 7, including the Copilot App showcase and the Fleet/Squad concept segment) fits inside 55 minutes. The *talking points* in the Copilot App showcase and the Fleet/Squad segment are not optional, they're core content, only the optional live `/fleet` demo can be cut for time.
 
 > **Livestream note:** there is no in-room audience. Everyone watching is in YouTube chat. Have a moderator (or a second monitor) watching chat throughout so questions can be answered live without breaking your flow on screen.
 
@@ -207,7 +208,53 @@ Narrate what viewers are seeing on screen: all tests passing, in under a second.
 
 ---
 
-## Segment 5B - Concept: Scaling Up, From One Issue to a Fleet (0:30 to 0:38)
+## Segment 5B - Showcase: The GitHub Copilot App (0:30 to 0:34)
+
+*Screen: GitHub Copilot app, My Work view*
+
+> **This segment is core content, not optional.** While Copilot works in the background on the issue we just assigned, this is the natural moment to showcase the app we already have open and explain why it matters.
+
+**SAY:**
+> We already opened the GitHub Copilot app to watch our session, but let's slow down for a minute because most of you haven't seen this before, and it's genuinely a different way of working with agents.
+>
+> The Copilot app is a standalone desktop application, it's not a browser tab and it's not an editor extension. It's a control center purpose-built for **agent-native development**. Instead of bouncing between a GitHub Issue tab, a PR tab, and a terminal to figure out what's happening, everything lives in one place.
+
+**DO:**
+1. Point to the **My Work** view on screen
+2. Call out the active session for the issue we just assigned
+3. If time allows, show the inbox of issues and PRs from connected repos
+
+**SAY, what it is and when to use it:**
+> The heart of the app is the **My Work** view. It shows your active sessions, one per agent working on a task, your inbox of issues and PRs, and any background automations, like Agent Merge carrying a PR through CI and review while you're not even looking at it.
+>
+> You reach for this app specifically when you're directing **more than one agent at a time**. If you're the kind of developer who assigns one issue and waits, VS Code or GitHub.com is fine. But the moment you're running two, five, ten sessions in parallel, this app is where you go to see all of them at a glance instead of hunting across browser tabs.
+>
+> It's also worth knowing this isn't just for developers. Because it's a desktop-first, visual interface rather than a terminal or an IDE, it's genuinely approachable for product managers, business analysts, anyone on your team who wants to direct an agent but finds the CLI or VS Code intimidating.
+
+**SAY, why this instead of Codespaces, VS Code, or github.com:**
+> Someone in chat is probably wondering, don't I already have Codespaces, VS Code, and github.com for this? Yes, and the Copilot app doesn't replace any of them, it fills a specific gap.
+>
+> Think of it this way: VS Code is where you write and review code with instant, in-editor AI assistance. GitHub.com is your hub for collaboration, code review, and PR management, always accessible from a browser. Codespaces gives you a full cloud dev environment when you need to run and debug code yourself. The Copilot app's strength is different: it's the control center for **directing and monitoring multiple agents in parallel**, something none of those three experiences were designed to visualize at a glance. You'll still use all of them together, VS Code to code, github.com to collaborate, and the Copilot app to orchestrate.
+
+**SAY, worktrees:**
+> Here's the part that makes parallel agents actually safe: every session in the Copilot app runs in its own **git worktree**, a real, isolated copy of your branch and working directory.
+>
+> That means if I have three agents working on three different issues in the same repo right now, they each get their own branch, their own environment, their own set of changes, and they cannot step on each other. No manual branch juggling, no `git stash` gymnastics, the app creates and cleans up worktrees automatically. You can even pick up a session on a different device later, because the worktree and the session state travel with it.
+
+**SAY, canvases:**
+> The last piece is **canvases**. Instead of a long chat thread where you're squinting to figure out what an agent actually did, a canvas is an interactive surface, a plan, a PR diff, terminal output, even a live browser session, that updates in real time as the agent works.
+>
+> You can edit, approve, or redirect the agent right there on the canvas, instead of typing another chat message and hoping it understood you. It turns "trust me, it's working" into something you can actually see and steer.
+
+> 🔎 **Fun fact to drop here:** the Copilot app supports deep links, like `ghapp://session/new?repo=owner/repo&prompt=fix%20the%20flaky%20test`, so you can kick off a new agent session straight from a terminal alias or script, then watch it land in My Work.
+
+> 👀 **WATCH FOR:** chat will likely ask "do I still need VS Code?" Reinforce: yes, absolutely, the Copilot app is an addition for orchestrating multiple agents, not a replacement for your editor.
+
+> 💡 **Chat prompt:** ask chat "If you had three agents running right now, what three tasks would you hand them?"
+
+---
+
+## Segment 5C - Concept: Scaling Up, From One Issue to a Fleet (0:34 to 0:38)
 
 *Screen: Concept slide or architecture diagram, terminal optional*
 
@@ -420,7 +467,8 @@ CLI (app.py)
 - The learning is in the *reading and understanding* the acceptance criteria, not just in typing it.
 
 **If running behind schedule overall:**
-- Cut the live `/fleet` demo inside Segment 5B entirely, but still cover the talking points, that segment's explanation is core content and should not be dropped, only its optional demo.
+- Cut the live `/fleet` demo inside Segment 5C entirely, but still cover the talking points, that segment's explanation is core content and should not be dropped, only its optional demo.
+- If you need to trim further, shorten Segment 5B (Copilot App showcase) by skipping the deep links fun fact and the live canvas walkthrough, but keep the what-it-is, when-to-use-it, and worktrees talking points, they're core content.
 - Cut Segment 8 (Azure + AI stretch) entirely, it is designed as optional filler, not core content.
 - Compress Segment 3 (Context) by skipping the live `pytest` run and just stating the test count and pass rate on screen.
 
